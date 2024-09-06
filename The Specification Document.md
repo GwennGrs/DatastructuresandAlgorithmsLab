@@ -16,4 +16,4 @@ The algorithm will therefore make it possible to determine what type of flower i
 As input data I have the different sizes of petals and sepals. We can also enter the colors, the locations, if they are foraged, etc. Once the data is entered they pass through the different layers of the neural network and apply the weights related to the different characteristics.
 
 ### The desired time and space complexities
-The space complexity of an MLP is determined by the number of weights and biases that need to be stored. 
+The space complexity of an MLP is determined by the number of weights and biases that need to be stored. The complexities will be determined by the number of layers and the number of neurons per layer needed to process and calculate the algorithm.
