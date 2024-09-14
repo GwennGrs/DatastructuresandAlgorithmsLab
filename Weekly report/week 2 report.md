@@ -18,7 +18,7 @@ I calculate on paper to check my results.
 The result is calculated according to the sigmoid function:
 if I get -0.99999 the sigmoid function will return me 0.26.
 
-![alt text](image.png)
+![alt text](pictures/sigmoid.png)
 *Figure 1/ Sigmoid fonction (Wikipédia)*
 
 ### Training process :
