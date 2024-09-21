@@ -3,7 +3,7 @@ import numpy as np
 from random import random
 
 
-class MLP():
+class MLP(object):
     """A Multilayer Perceptron class.
     """
 
@@ -11,7 +11,7 @@ class MLP():
         """Constructor for the MLP. Takes the number of inputs,
             a variable number of hidden layers, and number of outputs
 
-        Args:
+        Arguments:
             num_inputs (int): Number of inputs
             hidden_layers (list): A list of ints for the hidden layers
             num_outputs (int): Number of outputs
@@ -21,10 +21,10 @@ class MLP():
         self.hidden_layers = hidden_layers
         self.num_outputs = num_outputs
 
-        # create a generic representation of the layers
+        # to simplify the representation of the layers
         layers = [num_inputs] + hidden_layers + [num_outputs]
 
-        # create random connection weights for the layers
+        # create random connection weights for the layers, segments the "layer" array into the necessary matrices.
         weights = []
         for i in range(len(layers) - 1):
             w = np.random.rand(layers[i], layers[i + 1])
@@ -58,7 +58,7 @@ class MLP():
         # the input layer activation is just the input itself
         activations = inputs
 
-        # save the activations for backpropogation
+        # save the activations(here the inputs) for backpropagation
         self.activations[0] = activations
 
         # iterate through the network layers
@@ -93,7 +93,7 @@ class MLP():
             # apply sigmoid derivative function
             delta = error * self._sigmoid_derivative(activations)
 
-            # reshape delta as to have it as a 2d array
+            # reshape delta (-1 guess automatically the size)
             delta_re = delta.reshape(delta.shape[0], -1).T
 
             # get activations for current layer
@@ -140,17 +140,11 @@ class MLP():
                 sum_errors += self._mse(target, output)
 
             # Epoch complete, report the training error
-            print("Error: {} at epoch {}".format(sum_errors / len(items), i+1))
-
         print("Training complete!")
         print("=====")
 
 
     def gradient_descent(self, learningRate=1):
-        """Learns by descending the gradient
-        Args:
-            learningRate (float): How fast to learn.
-        """
         # update the weights by stepping down the gradient
         for i in range(len(self.weights)):
             weights = self.weights[i]
@@ -159,56 +153,13 @@ class MLP():
 
 
     def _sigmoid(self, x):
-        """Sigmoid activation function
-        Args:
-            x (float): Value to be processed
-        Returns:
-            y (float): Output
-        """
-
         y = 1.0 / (1 + np.exp(-x))
         return y
 
 
     def _sigmoid_derivative(self, x):
-        """Sigmoid derivative function
-        Args:
-            x (float): Value to be processed
-        Returns:
-            y (float): Output
-        """
         return x * (1.0 - x)
 
 
     def _mse(self, target, output):
-        """Mean Squared Error loss function
-        Args:
-            target (ndarray): The ground trut
-            output (ndarray): The predicted values
-        Returns:
-            (float): Output
-        """
         return np.average((target - output) ** 2)
-
-
-if __name__ == "__main__":
-
-    # create a dataset to train a network for the sum operation
-    items = np.array([[random()/2 for _ in range(2)] for _ in range(1000)])
-    targets = np.array([[i[0] + i[1]] for i in items])
-
-    # create a Multilayer Perceptron with one hidden layer
-    mlp = MLP(2, [5], 1)
-
-    # train network
-    mlp.train(items, targets, 50, 0.1)
-
-    # create dummy data
-    input = np.array([123, 120])
-    target = np.array([1])
-
-    # get a prediction
-    output = mlp.forward_propagate(input)
-
-    print()
-    print("Our network believes that {} + {} is equal to {}".format(input[0], input[1], output[0]))
