@@ -1,4 +1,5 @@
 # 2nd Weekly report :
+*7 hours*
 
 I start by implementing a simple neural network for the beginning. So that I can visualize how a single simple neuron works before implementing a full network.
 *Source : https://www.youtube.com/watch?v=kft1AJ9WVDk&list=PLcTRC8diSLLB5ViyPGiwZfAi3t7bhwjQv*
