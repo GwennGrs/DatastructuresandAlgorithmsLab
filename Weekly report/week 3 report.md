@@ -1,4 +1,6 @@
 # Weekly report 3
+*6 hours*
+
 ## NN Implementation:
 I implemented an MLP (multilayer perceptron) algorithm using the principles used for the creation of the individual neuron created later. I then reuse the sigmoid function and its derivative, the forward function allowing the propagation of inputs via the activation functions and the train method using backward propagation to correct the weights in order to adjust the model.
 We lay the foundations of the network with the possibility of choosing the number of inputs, outputs and hidden layers.
