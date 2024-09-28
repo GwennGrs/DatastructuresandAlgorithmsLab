@@ -1,6 +1,6 @@
-
 import numpy as np
 from random import random
+from function import sigmoid, sigmoid_derivatives, mse, gradient_descent
 
 
 class MLP(object):
@@ -67,7 +67,7 @@ class MLP(object):
             net_inputs = np.dot(activations, w)
 
             # apply sigmoid activation function
-            activations = self._sigmoid(net_inputs)
+            activations = sigmoid(net_inputs)
 
             # save the activations for backpropogation
             self.activations[i + 1] = activations
@@ -91,7 +91,7 @@ class MLP(object):
             activations = self.activations[i+1]
 
             # apply sigmoid derivative function
-            delta = error * self._sigmoid_derivative(activations)
+            delta = error * sigmoid_derivatives(activations)
 
             # reshape delta (-1 guess automatically the size)
             delta_re = delta.reshape(delta.shape[0], -1).T
@@ -137,29 +137,8 @@ class MLP(object):
                 self.gradient_descent(learning_rate)
 
                 # keep track of the MSE for reporting later
-                sum_errors += self._mse(target, output)
+                sum_errors += mse(target, output)
 
             # Epoch complete, report the training error
         print("Training complete!")
         print("=====")
-
-
-    def gradient_descent(self, learningRate=1):
-        # update the weights by stepping down the gradient
-        for i in range(len(self.weights)):
-            weights = self.weights[i]
-            derivatives = self.derivatives[i]
-            weights += derivatives * learningRate
-
-
-    def _sigmoid(self, x):
-        y = 1.0 / (1 + np.exp(-x))
-        return y
-
-
-    def _sigmoid_derivative(self, x):
-        return x * (1.0 - x)
-
-
-    def _mse(self, target, output):
-        return np.average((target - output) ** 2)

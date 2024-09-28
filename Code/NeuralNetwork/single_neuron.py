@@ -1,11 +1,5 @@
 import numpy as np
-
-# Permet de la non-linéarité
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
-def sigmoid_derivatives(x):
-    return x*(1-x)
+from function import sigmoid_derivatives, sigmoid
 
 # Training data input
 train = np.array([[0,0,1], [1,0,1], [1,1,0]])
@@ -16,7 +10,8 @@ np.random.seed(1)
 # Training outputs
 wanted_outputs = np.array([[0,1,0]]).T
 
-# Training weight
+# # Training weight
+
 fictive_weight = 2 * np.random.random((3,1)) -1
 print("Old training weight =", fictive_weight)
 print ("- - - - - - - -")
