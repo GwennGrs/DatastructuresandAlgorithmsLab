@@ -23,7 +23,7 @@ def sigmoid_derivatives(x):
     """
     return x*(1-x)
 
-def mse(self, target, output):
+def mse(target, output):
     """
     Compute the Mean Squared Error (MSE) between the target and output.
     Parameters:
@@ -34,19 +34,7 @@ def mse(self, target, output):
     """
     return np.average((target - output) ** 2)
 
-def gradient_descent(self, learningRate=1):
-    """
-    Perform gradient descent to update the weights.
-    Parameters:
-        learningRate (float): The learning rate for gradient descent. Default is 1.
-    Returns:
-        None
-    """
-    # update the weights by stepping down the gradient
-    for i in range(len(self.weights)):
-        weights = self.weights[i]
-        derivatives = self.derivatives[i]
-        weights += derivatives * learningRate
+
 
 # Pour le data preprocessing
 

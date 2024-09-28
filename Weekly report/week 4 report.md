@@ -28,3 +28,5 @@ The function.py and MLP.py files have been tested correctly, the only one not te
 For next week, I would like to link the use of the interface with the MLP class, either by entering data on a model previously trained by a defined dataset or by being able to add a dataset ourselves which would be processed, trained and then made available to the user.
 
 I will also have to translate the comments into English and start writing the "how to" in the ReadME.md.
+
+I will also have to rework my One Hot encoding function to see what differs from sklearn's.

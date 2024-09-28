@@ -1,6 +1,6 @@
 import numpy as np
 from random import random
-from function import sigmoid, sigmoid_derivatives, mse, gradient_descent
+from function import sigmoid, sigmoid_derivatives, mse
 
 
 class MLP(object):
@@ -139,6 +139,16 @@ class MLP(object):
                 # keep track of the MSE for reporting later
                 sum_errors += mse(target, output)
 
-            # Epoch complete, report the training error
         print("Training complete!")
         print("=====")
+
+    def gradient_descent(self, learningRate=1):
+        """Learns by descending the gradient
+        Args:
+            learningRate (float): How fast to learn.
+        """
+        # update the weights by stepping down the gradient
+        for i in range(len(self.weights)):
+            weights = self.weights[i]
+            derivatives = self.derivatives[i]
+            weights += derivatives * learningRate
