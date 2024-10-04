@@ -1,6 +1,6 @@
 import numpy as np
 from random import random
-from function import sigmoid, sigmoid_derivatives, mse
+from Code.NeuralNetwork.function import sigmoid, sigmoid_derivatives, mse
 
 
 class MLP(object):
