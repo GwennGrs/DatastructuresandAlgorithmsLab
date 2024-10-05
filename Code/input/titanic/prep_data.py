@@ -21,18 +21,22 @@ def prep_traindata():
     train = pd.read_csv('Code/input/titanic/train.csv')
     # BEGIN: Préparation des données pour le modèle MLP
     # Sélectionner les colonnes pertinentes et gérer les valeurs manquantes
-    train = train[['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
+    train = train[['Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]
     train = train.dropna()
 
     # Convertir les colonnes catégorielles en numériques
     train['Sex'] = train['Sex'].map({'male': 0, 'female': 1})
     train = pd.get_dummies(train, columns=['Embarked'], drop_first=True)
 
-    # Normaliser les caractéristiques
-    X_train = scaler.fit_transform(train.drop('Pclass', axis=1))  # Supposons que 'Pclass' est la cible pour cet exemple
+    # Séparer les caractéristiques (X) et la cible (y)
+    X_train = train.drop('Survived', axis=1)
+    y_train = train['Survived']
 
-    # Appliquer one-hot encoding à la cible
-    y_train = encoder.fit_transform(train[['Pclass']])
+    # Normaliser les caractéristiques
+    X_train = scaler.fit_transform(X_train)
+
+    # Appliquer one-hot encoding à la cible (binaire dans ce cas)
+    y_train = encoder.fit_transform(y_train.values.reshape(-1, 1))
     # END: Préparation des données pour le modèle MLP
     return X_train, y_train
 
