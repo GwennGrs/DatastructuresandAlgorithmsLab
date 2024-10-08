@@ -16,6 +16,7 @@ class MLP(object):
             hidden_layers (list): A list of ints for the hidden layers
             num_outputs (int): Number of outputs
         """
+        #Set the random seed for reproducibility
 
         self.num_inputs = num_inputs
         self.hidden_layers = hidden_layers
