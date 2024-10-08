@@ -1,6 +1,6 @@
 import numpy as np
 
-## For the MLP modele 
+## For the MLP model
 
 # For nonlinearity
 def sigmoid(x):
@@ -36,9 +36,9 @@ def mse(target, output):
 
 
 
-# Pour le data preprocessing
+# For data preprocessing
 
-#OneHotEncoder
+# OneHotEncoder
 def one_hot_encoder(labels):
     """
     Encode labels into a one-hot representation.
@@ -55,4 +55,3 @@ def one_hot_encoder(labels):
         one_hot_encoded[i, index] = 1
     
     return one_hot_encoded
-

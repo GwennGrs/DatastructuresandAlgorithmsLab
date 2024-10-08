@@ -16,7 +16,7 @@ class MLP(object):
             hidden_layers (list): A list of ints for the hidden layers
             num_outputs (int): Number of outputs
         """
-        #Set the random seed for reproducibility
+        # Set the random seed for reproducibility
 
         self.num_inputs = num_inputs
         self.hidden_layers = hidden_layers
@@ -70,7 +70,7 @@ class MLP(object):
             # apply sigmoid activation function
             activations = sigmoid(net_inputs)
 
-            # save the activations for backpropogation
+            # save the activations for backpropagation
             self.activations[i + 1] = activations
 
         # return output layer activation
@@ -78,9 +78,9 @@ class MLP(object):
 
 
     def back_propagate(self, error):
-        """Backpropogates an error signal.
+        """Backpropagates an error signal.
         Args:
-            error (ndarray): The error to backprop.
+            error (ndarray): The error to backpropagate.
         Returns:
             error (ndarray): The final error of the input
         """
@@ -106,12 +106,12 @@ class MLP(object):
             # save derivative after applying matrix multiplication
             self.derivatives[i] = np.dot(current_activations, delta_re)
 
-            # backpropogate the next error
+            # backpropagate the next error
             error = np.dot(delta, self.weights[i].T)
 
 
     def train(self, inputs, targets, epochs, learning_rate):
-        """Trains model running forward prop and backprop
+        """Trains model running forward prop and backpropagation
         Args:
             inputs (ndarray): X
             targets (ndarray): Y
