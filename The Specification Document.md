@@ -10,7 +10,7 @@ For this work I will then implement a multilayer Perceptron algorithm. For the i
 For classification, training and testing of my algorithm I will need labeled data for classification. Test and training data for the operation of the algorithm.
 
 ### What problem are you solving?
-This algorithm allows to determine if with given variables if the passenger survived or not. From the following variables: The Pclass which determines if the passenger's class is between 3 (1 being first class), the age, the number of siblings or spouses on board, the number of parents/children on board, the price of the ticket and the port embarked.
+This algorithm allows to determine with given variables if the passenger survived or not. From the following variables: The Pclass which determines if the passenger's class is between 3 (1 being first class), the age, the number of siblings or spouses on board, the number of parents/children on board, the price of the ticket and the port embarked.
 
 ### What inputs does your program take, and how are these used?
 As input data I have the Pclass which determines if the passenger's class is between 3 (1 being first class), the age, the number of siblings or spouses on board, the number of parents/children on board, the price of the ticket and the port embarked. Once the data is entered they pass through the different layers of the neural network and apply the weights related to the different characteristics.

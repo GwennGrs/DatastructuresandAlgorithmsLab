@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "neuralnetwork*"
+version = "0.1.0"
+description = "An algorithm allows to determine with given variables if the passenger survived or not on the Titanic"
+authors = ["GwennGrs <149371205+GwennGrs@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+numpy = "^2.1.2"
+customtkinter = "^5.2.2"
+pandas = "^2.2.3"
+scikit-learn = "^1.5.2"  # Ajout de scikit-learn
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
