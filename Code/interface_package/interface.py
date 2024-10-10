@@ -6,7 +6,7 @@ def tester_modele(mlp, testdata, my_label):
     result = testdata(mlp)  # Call the test function with the model
     my_label.configure(text=f"Test result: {result:.2f}% accuracy")  # Display the float with 2 decimals
 
-def afficher_donnees(entries, mlp, my_label):
+def afficher_donnees(entries, mlp, my_label, input_window):
     data = {
         'Pclass': entries['Pclass'].get(),
         'Sex': entries['Sex'].get(),
@@ -41,6 +41,7 @@ def afficher_donnees(entries, mlp, my_label):
     else:
         result_text += "Prediction: Passenger survived"
     my_label.configure(text=result_text)  # Display in the main label
+    input_window.destroy()  # Ferme la fenêtre après l'affichage
 
 def entrer_donnees(app, mlp, my_label):
     input_window = customtkinter.CTkToplevel(app)
@@ -74,7 +75,7 @@ def entrer_donnees(app, mlp, my_label):
         entries[field] = input_entry
 
     # Button to submit and display the data
-    test_button = customtkinter.CTkButton(input_window, text="Display data and prediction", command=lambda: afficher_donnees(entries, mlp, my_label))
+    test_button = customtkinter.CTkButton(input_window, text="Display data and prediction", command=lambda: afficher_donnees(entries, mlp, my_label, input_window))
     test_button.pack(pady=20)
 
 def app_interface(mlp, testdata):

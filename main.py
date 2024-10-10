@@ -1,18 +1,18 @@
 def main():
-    # Importer les modules nécessaires
+    # Import the necessary modules
     from Code.NeuralNetwork.multilayerPerceptron import MLP
     from Code.input.titanic.prep_data import prep_traindata, testdata
-    from Code.interface_package.interface import app_interface  # Appeler ton interface
+    from Code.interface_package.interface import app_interface  # Call your interface
 
-    # Préparation des données pour le modèle MLP
+    # Preparing data for MLP model
     X_train, y_train = prep_traindata()
 
-    # Le nombre de sorties doit être 3 (encodage one-hot pour les classes 1, 2, 3)
-    mlp = MLP(num_inputs=X_train.shape[1], hidden_layers=[3, 3], num_outputs=2)  # 2 sorties pour les classes 0 (non survécu) et 1 (survécu)
-    # Entraîner le modèle MLP
-    mlp.train(X_train, y_train, epochs=250, learning_rate=0.1)    
+    # The number of outputs must be 3 (one-hot encoding for classes 1, 2, 3)
+    mlp = MLP(num_inputs=X_train.shape[1], hidden_layers=[3, 3], num_outputs=2)  # 2 exits for classes 0 (not survived) and 1 (survived)
+    # Training the MLP model
+    mlp.train(X_train, y_train, epochs=400, learning_rate=0.1)    
 
-    # Lancer l'interface avec le modèle MLP et la fonction testdata
+    # Launch the interface with the MLP model and the testdata function
     app_interface(mlp, testdata)
 
 if __name__ == "__main__":
