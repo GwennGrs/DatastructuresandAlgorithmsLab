@@ -140,8 +140,23 @@ class MLP(object):
                 # keep track of the MSE for reporting later
                 sum_errors += mse(target, output)
 
-        print("Training complete!")
+            # Print the progress
+            self.print_progress(i + 1, epochs)
+
+        print("\nTraining complete!")
         print("=====")
+
+    def print_progress(self, current_epoch, total_epochs):
+        """Prints the progress of the training."""
+        percent_complete = (current_epoch / total_epochs) * 100
+        bar_length = 50  # Length of the progress bar
+        block = int(round(bar_length * current_epoch / total_epochs))
+        
+        # Create the progress bar string
+        progress_bar = f"[{'#' * block}{'-' * (bar_length - block)}] {percent_complete:.2f}%"
+        
+        # Print the progress bar in the same line
+        print(f"\r{progress_bar}", end="")  # `end=""` to stay on the same line
 
     def gradient_descent(self, learningRate=1):
         """Learns by descending the gradient

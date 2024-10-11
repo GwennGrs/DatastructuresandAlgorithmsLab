@@ -119,5 +119,4 @@ def test_user_input(mlp, inputs):
     # Test the model on user data
     output = mlp.forward_propagate(X_user[0])
     predicted_class = np.argmax(output)  # Returns the predicted class (0 or 1)
-    print(predicted_class)
     return predicted_class

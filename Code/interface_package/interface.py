@@ -23,8 +23,8 @@ def tester_modele(mlp, testdata, my_label):
 def afficher_donnees(entries, mlp, my_label, input_window):
     """
     Display entered data and prediction result in a label, then close the input window.
-    This function retrieves user input from the provided entries, formats the data for display,
-    prepares it for prediction, and then calls a prediction function. The result is displayed
+    This function retrieves user input from the provided entries, validates the data,
+    formats it for display, and calls the prediction function. The result is displayed
     in the provided label, and the input window is closed.
     Args:
         entries (dict): A dictionary containing the user input fields. Each key corresponds to a field name,
@@ -35,41 +35,93 @@ def afficher_donnees(entries, mlp, my_label, input_window):
     Returns:
         None
     """
-    data = {
-        'Pclass': entries['Pclass'].get(),
-        'Sex': entries['Sex'].get(),
-        'Age': entries['Age'].get(),
-        'SibSp': entries['SibSp'].get(),
-        'Parch': entries['Parch'].get(),
-        'Fare': entries['Fare'].get(),
-        'Embarked': entries['Embarked'].get()
-    }
+    try:
+        # Retrieve and validate the data from the input fields with specific error handling
+        try:
+            pclass = int(entries['Pclass'].get())
+        except ValueError:
+            raise ValueError("Pclass must be a valid integer (1, 2, or 3).")
+        
+        try:
+            age = float(entries['Age'].get())
+        except ValueError:
+            raise ValueError("Age must be a valid number.")
+        
+        try:
+            sibsp = int(entries['SibSp'].get())
+        except ValueError:
+            raise ValueError("SibSp must be a valid non-negative integer.")
+        
+        try:
+            parch = int(entries['Parch'].get())
+        except ValueError:
+            raise ValueError("Parch must be a valid non-negative integer.")
+        
+        try:
+            fare = float(entries['Fare'].get())
+        except ValueError:
+            raise ValueError("Fare must be a valid number.")
 
-    # Create a text string with the entered data
-    result_text = (f"Entered data:\nPclass: {data['Pclass']}\n"
-                   f"Sex: {data['Sex']}\nAge: {data['Age']}\n"
-                   f"SibSp: {data['SibSp']}\nParch: {data['Parch']}\n"
-                   f"Fare: {data['Fare']}\nEmbarked: {data['Embarked']}\n")
+        # Retrieve categorical inputs
+        sex = entries['Sex'].get()
+        embarked = entries['Embarked'].get()
 
-    # Prepare the data for prediction
-    user_input = {
-        'Pclass': int(data['Pclass']),
-        'Sex': 0 if data['Sex'] == 'male' else 1,  # Convert 'male'/'female' to 0/1
-        'Age': float(data['Age']),
-        'SibSp': int(data['SibSp']),
-        'Parch': int(data['Parch']),
-        'Fare': float(data['Fare']),
-        'Embarked': data['Embarked']  # To be handled according to your model
-    }
+        # Perform further validation of categorical inputs
+        if pclass not in [1, 2, 3]:
+            raise ValueError("Pclass must be 1, 2, or 3.")
+        if sex not in ['male', 'female']:
+            raise ValueError("Sex must be either 'male' or 'female'.")
+        if not (0 <= age <= 120):
+            raise ValueError("Age must be between 0 and 120.")
+        if sibsp < 0:
+            raise ValueError("SibSp must be a non-negative integer.")
+        if parch < 0:
+            raise ValueError("Parch must be a non-negative integer.")
+        if fare < 0:
+            raise ValueError("Fare must be a non-negative number.")
+        if embarked not in ['C', 'Q', 'S']:
+            raise ValueError("Embarked must be 'C', 'Q', or 'S'.")
 
-    # Call the test_user_input function
-    prediction_accuracy = test_user_input(mlp, user_input)  # Adjust this function to return the prediction
-    if prediction_accuracy == 0:
-        result_text += "Prediction: Passenger didn't survive"
+        # Convert categorical variables (Sex, Embarked) to numerical values
+        user_input = {
+            'Pclass': pclass,
+            'Sex': 0 if sex == 'male' else 1,  # Convert 'male'/'female' to 0/1
+            'Age': age,
+            'SibSp': sibsp,
+            'Parch': parch,
+            'Fare': fare,
+            'Embarked': {'C': 0, 'Q': 1, 'S': 2}[embarked]  # Convert 'C', 'Q', 'S' to 0, 1, 2
+        }
+
+        # Call the prediction function
+        prediction = test_user_input(mlp, user_input)
+
+        # Create a result text based on prediction
+        result_text = (f"Entered data:\nPclass: {pclass}\n"
+                       f"Sex: {sex}\nAge: {age}\n"
+                       f"SibSp: {sibsp}\nParch: {parch}\n"
+                       f"Fare: {fare}\nEmbarked: {embarked}\n")
+
+        if prediction == 0:
+            result_text += "Prediction: Passenger didn't survive"
+        else:
+            result_text += "Prediction: Passenger survived"
+
+        # Update the label with the prediction result
+        my_label.configure(text=result_text)
+
+    except ValueError as e:
+        # Display error message in case of invalid input
+        error_window = customtkinter.CTkToplevel(input_window)
+        error_window.title("Error")
+        error_window.geometry('300x100')
+        error_label = customtkinter.CTkLabel(error_window, text=f"Error: {str(e)}")
+        error_label.pack(pady=20)
+
     else:
-        result_text += "Prediction: Passenger survived"
-    my_label.configure(text=result_text)  # Display in the main label
-    input_window.destroy()  # Ferme la fenêtre après l'affichage
+        # Close the input window after displaying the result
+        input_window.destroy()
+
 
 # Enter data
 def entrer_donnees(app, mlp, my_label):
