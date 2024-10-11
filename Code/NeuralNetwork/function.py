@@ -34,8 +34,6 @@ def mse(target, output):
     """
     return np.average((target - output) ** 2)
 
-
-
 # For data preprocessing
 
 # OneHotEncoder

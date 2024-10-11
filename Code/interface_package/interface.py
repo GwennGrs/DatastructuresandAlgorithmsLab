@@ -1,12 +1,40 @@
 import customtkinter
 from Code.input.titanic.prep_data import test_user_input
 
+#Test the model
 def tester_modele(mlp, testdata, my_label):
-    my_label.configure(text="The model is being tested...")  # Indication of ongoing test
+    """
+    Test the machine learning model with the provided test data and display the result in a label.
+    This function updates the label to indicate that the model is being tested, calls the test function,
+    and then updates the label with the test result.
+    
+    Args:
+        mlp (object): The machine learning model to be tested.
+        testdata (function): A function that takes the model as input and returns the test accuracy.
+        my_label (tkinter.Label): The label widget where the test result will be displayed.
+    
+    Returns:
+        None
+    """
+    my_label.configure(text="The model is being tested...")  # Indicate that the test is in progress
     result = testdata(mlp)  # Call the test function with the model
-    my_label.configure(text=f"Test result: {result:.2f}% accuracy")  # Display the float with 2 decimals
+    my_label.configure(text=f"Test result: {result:.2f}% accuracy")  # Display the test result with 2 decimal places
 
 def afficher_donnees(entries, mlp, my_label, input_window):
+    """
+    Display entered data and prediction result in a label, then close the input window.
+    This function retrieves user input from the provided entries, formats the data for display,
+    prepares it for prediction, and then calls a prediction function. The result is displayed
+    in the provided label, and the input window is closed.
+    Args:
+        entries (dict): A dictionary containing the user input fields. Each key corresponds to a field name,
+                        and the value is a Tkinter Entry widget.
+        mlp (object): The machine learning model used for prediction.
+        my_label (tkinter.Label): The label widget where the result will be displayed.
+        input_window (tkinter.Toplevel): The input window that will be closed after displaying the result.
+    Returns:
+        None
+    """
     data = {
         'Pclass': entries['Pclass'].get(),
         'Sex': entries['Sex'].get(),
@@ -43,7 +71,24 @@ def afficher_donnees(entries, mlp, my_label, input_window):
     my_label.configure(text=result_text)  # Display in the main label
     input_window.destroy()  # Ferme la fenêtre après l'affichage
 
+# Enter data
 def entrer_donnees(app, mlp, my_label):
+    """
+    Opens a new window to enter data for prediction.
+    Parameters:
+    app (customtkinter.CTk): The main application window.
+    mlp (object): The machine learning model used for prediction.
+    my_label (customtkinter.CTkLabel): The label to display the prediction result.
+    The function creates a new window with entry fields for the following data:
+    - Pclass: Passenger class (dropdown menu with options "1", "2", "3")
+    - Sex: Gender (dropdown menu with options "male", "female")
+    - Age: Age (text entry)
+    - SibSp: Number of siblings/spouses aboard (text entry)
+    - Parch: Number of parents/children aboard (text entry)
+    - Fare: Ticket fare (text entry)
+    - Embarked: Port of embarkation (dropdown menu with options "C", "Q", "S")
+    A button is provided to submit the entered data and display the prediction result.
+    """
     input_window = customtkinter.CTkToplevel(app)
     input_window.title("Enter data")
     input_window.geometry('400x400')
@@ -78,7 +123,21 @@ def entrer_donnees(app, mlp, my_label):
     test_button = customtkinter.CTkButton(input_window, text="Display data and prediction", command=lambda: afficher_donnees(entries, mlp, my_label, input_window))
     test_button.pack(pady=20)
 
+# Application interface
 def app_interface(mlp, testdata):
+    """
+    Initializes and runs the graphical user interface for the MLP Model Training on the Titanic Dataset.
+    Parameters:
+    mlp (object): The trained MLP model to be tested.
+    testdata (DataFrame): The test data to be used for model evaluation.
+    The interface includes:
+    - A title and window size setup.
+    - A label displaying the application title.
+    - A label to display the status of the model testing.
+    - A button to test the model, which triggers the `tester_modele` function.
+    - A button to enter data, which triggers the `entrer_donnees` function.
+    The application runs in a loop until the user closes the window.
+    """
     # Create the application
     app = customtkinter.CTk()
     app.title("MLP Model Training : Titanic Dataset")
