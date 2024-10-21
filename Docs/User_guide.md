@@ -50,6 +50,7 @@ _The execution of the program can be followed live in the executed console, befo
 Logically after a few seconds, an interface will appear with the model trained and ready for use.
 
 ![alt text](images/interface.png)
+
 _User interface_
 
 ### Test the model 
