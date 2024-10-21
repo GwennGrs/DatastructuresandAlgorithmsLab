@@ -9,6 +9,7 @@ Go to the project's Github repository: https://github.com/GwennGrs/Datastructure
 
 Click on code and download the zip
 ![alt text](images/zipinstall.png)
+
 *Capture from github*
 
 Once the zip is downloaded, unzip it. _Example of software to unzip (Winrar, 7zip)_
@@ -41,6 +42,7 @@ If everything is installed correctly and you are in the project folder, you can 
 python3 main.py
 ```
 ![alt text](images/executionmain.png)
+
 _The execution of the program can be followed live in the executed console, before the interface appears._
 
 # How to use it
