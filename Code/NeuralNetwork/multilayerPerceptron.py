@@ -128,6 +128,7 @@ class MLP(object):
 
                 # activate the network!
                 output = self.forward_propagate(input)
+                
 
                 error = target - output
 
@@ -165,6 +166,4 @@ class MLP(object):
         """
         # update the weights by stepping down the gradient
         for i in range(len(self.weights)):
-            weights = self.weights[i]
-            derivatives = self.derivatives[i]
-            weights += derivatives * learningRate
+            self.weights[i] += self.derivatives[i] * learningRate

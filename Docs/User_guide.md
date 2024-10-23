@@ -34,7 +34,7 @@ After this install the dependencies necessary for the project to work.
 ```bash 
 poetry install
 ```
-
+_It is possible that a problem occurs with scikit-learn because of Joblib, in this case do -pip install scikit-learn- in the terminal_
 # Start the program
 If everything is installed correctly and you are in the project folder, you can then launch the main program.
 
