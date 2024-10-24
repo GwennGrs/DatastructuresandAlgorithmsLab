@@ -1,6 +1,25 @@
+"""
+This module provides functions to prepare and preprocess Titanic dataset for training and testing 
+a Multi-Layer Perceptron (MLP) model. It includes functions to prepare training data, test data, 
+and user input data for evaluation with the MLP model.
+Functions:
+    prep_traindata():
+        Prepares the training data for the MLP model by reading from a CSV file, selecting relevant 
+        columns, handling missing values, converting categorical columns to numerical, normalizing 
+        the features, and applying one-hot encoding to the target variable. Returns the normalized 
+        feature matrix and one-hot encoded target matrix for training.
+    testdata(mlp):
+        Prepares test data and evaluates the MLP model on it. Reads the test data from a CSV file, 
+        selects relevant columns, handles missing values, converts categorical columns to numeric, 
+        normalizes the features, and applies one-hot encoding on the target variable. Evaluates the 
+        provided MLP model on the test data and returns the accuracy.
+    test_user_input(mlp, inputs):
+        Tests the user input data on the trained MLP model. Takes the user input data, preprocesses 
+        it, and evaluates the trained MLP model on the preprocessed data. Returns the prediction 
+        accuracy of the model on the user input data.
+"""
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
-from sklearn.model_selection import train_test_split
 import numpy as np
 
 scaler = MinMaxScaler()
@@ -18,6 +37,7 @@ def prep_traindata():
             - y_train (numpy.ndarray): The one-hot encoded target matrix for training.
     """ 
     train = pd.read_csv('Code/input/titanic/train.csv')
+    
     # BEGIN: Data preparation for the MLP model
     # Select relevant columns and handle missing values
     train = train[['Survived', 'Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']]

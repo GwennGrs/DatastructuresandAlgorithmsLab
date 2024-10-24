@@ -1,3 +1,13 @@
+"""
+This module provides utility functions for a Multi-Layer Perceptron (MLP) model,
+including activation functions, error computation, and data preprocessing.
+Functions:
+    sigmoid(x):
+    sigmoid_derivatives(x):
+    mse(target, output):
+    one_hot_encoder(labels):
+"""
+
 import numpy as np
 
 ## For the MLP model
@@ -47,9 +57,9 @@ def one_hot_encoder(labels):
     """
     unique_labels = np.unique(labels)
     one_hot_encoded = np.zeros((len(labels), len(unique_labels)))
-    
+
     for i, label in enumerate(labels):
         index = np.where(unique_labels == label)[0][0]
         one_hot_encoded[i, index] = 1
-    
+
     return one_hot_encoded

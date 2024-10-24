@@ -1,9 +1,19 @@
+"""
+This module implements a Multilayer Perceptron (MLP) neural network from scratch using numpy. 
+It includes methods for forward propagation, backpropagation, and training the network.
+Classes:
+    MLP: A class representing a Multilayer Perceptron neural network.
+Functions:
+    sigmoid: Sigmoid activation function.
+    sigmoid_derivatives: Derivative of the sigmoid function.
+    mse: Mean Squared Error loss function.
+
+"""
+
 import numpy as np
-from random import random
 from Code.NeuralNetwork.function import sigmoid, sigmoid_derivatives, mse
 
-
-class MLP(object):
+class MLP():
     """A Multilayer Perceptron class.
     """
 
@@ -25,7 +35,8 @@ class MLP(object):
         # to simplify the representation of the layers
         layers = [num_inputs] + hidden_layers + [num_outputs]
 
-        # create random connection weights for the layers, segments the "layer" array into the necessary matrices.
+        # create random connection weights for the layers,
+        # segments the "layer" array into the necessary matrices.
         weights = []
         for i in range(len(layers) - 1):
             w = np.random.rand(layers[i], layers[i + 1])
@@ -41,8 +52,8 @@ class MLP(object):
 
         # save activations per layer
         activations = []
-        for i in range(len(layers)):
-            a = np.zeros(layers[i])
+        for layer in enumerate(layers):
+            a = np.zeros(layer)
             activations.append(a)
         self.activations = activations
 
@@ -95,7 +106,7 @@ class MLP(object):
             delta = error * sigmoid_derivatives(activations)
 
             # reshape delta (-1 guess automatically the size)
-            delta_re = delta.reshape(delta.shape[0], -1).T
+            delta_tmp = delta.reshape(delta.shape[0], -1).T
 
             # get activations for current layer
             current_activations = self.activations[i]
@@ -104,7 +115,7 @@ class MLP(object):
             current_activations = current_activations.reshape(current_activations.shape[0],-1)
 
             # save derivative after applying matrix multiplication
-            self.derivatives[i] = np.dot(current_activations, delta_re)
+            self.derivatives[i] = np.dot(current_activations, delta_tmp)
 
             # backpropagate the next error
             error = np.dot(delta, self.weights[i].T)
@@ -128,7 +139,7 @@ class MLP(object):
 
                 # activate the network!
                 output = self.forward_propagate(input)
-                
+
 
                 error = target - output
 
@@ -152,18 +163,17 @@ class MLP(object):
         percent_complete = (current_epoch / total_epochs) * 100
         bar_length = 50  # Length of the progress bar
         block = int(round(bar_length * current_epoch / total_epochs))
-        
         # Create the progress bar string
         progress_bar = f"[{'#' * block}{'-' * (bar_length - block)}] {percent_complete:.2f}%"
-        
+
         # Print the progress bar in the same line
         print(f"\r{progress_bar}", end="")  # `end=""` to stay on the same line
 
-    def gradient_descent(self, learningRate=1):
+    def gradient_descent(self, learning_rate=1):
         """Learns by descending the gradient
         Args:
             learningRate (float): How fast to learn.
         """
         # update the weights by stepping down the gradient
         for i in range(len(self.weights)):
-            self.weights[i] += self.derivatives[i] * learningRate
+            self.weights[i] += self.derivatives[i] * learning_rate
