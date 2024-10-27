@@ -16,7 +16,8 @@ def tester_modele(mlp, testdata, my_label):
     Returns:
         None
     """
-    my_label.configure(text="The model is being tested...")  # Indicate that the test is in progress
+    # Update the label to indicate that the model is being tested
+    my_label.configure(text="The model is being tested...") 
     result = testdata(mlp)  # Call the test function with the model
     my_label.configure(text=f"Test result: {result:.2f}% accuracy")  # Display the test result with 2 decimal places
 
@@ -193,8 +194,8 @@ def app_interface(mlp, testdata):
     # Create the application
     app = customtkinter.CTk()
     app.title("MLP Model Training : Titanic Dataset")
-    app.geometry('600x400')  # Window size
-
+    app.geometry('600x400')
+    
     label = customtkinter.CTkLabel(app, text="MLP Model Training : for Titanic Dataset")
     label.pack(pady=10)
 
@@ -204,7 +205,7 @@ def app_interface(mlp, testdata):
 
     # Create the button to test the model
     train_button = customtkinter.CTkButton(app, text="Test the model", command=lambda: tester_modele(mlp, testdata, my_label))
-    train_button.pack(pady=10)  # Ensure the test button is visible
+    train_button.pack(pady=10)
 
     # Create the button to enter data
     data_button = customtkinter.CTkButton(app, text="Enter data", command=lambda: entrer_donnees(app, mlp, my_label))

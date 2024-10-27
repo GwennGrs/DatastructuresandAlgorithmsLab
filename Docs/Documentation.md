@@ -46,6 +46,8 @@ Summary of the Backpropagation Process
 4.	Derivative storage: Calculated derivatives are stored for later use in updating weights.
 
 #### Advanced:
+_With an old dataset_
+
 The MLP code for the IRIS dataset works well.
 1 layer of 5 neurons is the most optimal for the current dataset.
 I used the default IRIS dataset from scikit.
@@ -53,14 +55,3 @@ Depending on the number of loops for the train, the results may be better or wor
 The most opti I've found is 250 loop with an average accuracy of 98%.
 
 The code network.py is a demonstration of the structure of my neural network.
-Code breakdown :
-
-### Installation of modules for the course :
-For test coverage : coverage (same name)
-Pip install coverage
-python -m coverage run -m unittest
-python -m coverage report
-
-To see the quality of the code : Pylint
-PATH problem with Pylint installation.
-Just do: pylint “code_name”.

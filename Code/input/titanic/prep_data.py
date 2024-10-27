@@ -119,7 +119,6 @@ def test_user_input(mlp, inputs):
         float: The prediction accuracy of the model on the user input data.
     """
     print("Testing user input data...")
-
     if scaler.fit is None:
         raise ValueError("Scaler not fitted. Please train the model first.")
     

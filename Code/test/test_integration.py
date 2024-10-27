@@ -1,4 +1,4 @@
-from Code.NeuralNetwork.multilayerPerceptron import MLP
+from Code.NeuralNetwork.multilayer_perceptron import MLP
 from Code.input.titanic.prep_data import prep_traindata, test_user_input, testdata
 import unittest
 import pandas as pd 
@@ -11,7 +11,7 @@ class TestNeuralNetworkFunctions(unittest.TestCase):
     # The number of outputs must be 3 (one-hot encoding for classes 1, 2, 3)
     mlp = MLP(num_inputs=X_train.shape[1], hidden_layers=[3, 3], num_outputs=2)  # 2 exits for classes 0 (not survived) and 1 (survived)
     # Training the MLP model
-    mlp.train(X_train, y_train, epochs=400, learning_rate=0.1)    
+    mlp.train(X_train, y_train, epochs=200, learning_rate=0.1)    
 
     ## Testing on input data
     
@@ -26,10 +26,22 @@ class TestNeuralNetworkFunctions(unittest.TestCase):
             'Embarked': {'C': 0, 'Q': 1, 'S': 2}["Q"]  # Convert 'C', 'Q', 'S' to 0, 1, 2
         }
 
+    # Second one of the test_fusion dataset supposed to be a survivor
+    user_input2 = {
+            'Pclass': 1,
+            'Sex': 1 ,
+            'Age': 47,
+            'SibSp': 1,
+            'Parch': 0,
+            'Fare': 52,
+            'Embarked': {'C': 0, 'Q': 1, 'S': 2}["S"]
+        }
+
     # Assert the prediction based on the input data
 
     def test_user_input(self):
         self.assertEqual(test_user_input(self.mlp, self.user_input), 0)
+        self.assertEqual(test_user_input(self.mlp, self.user_input2), 0)
     
     # Test the precision of the model on the test data > 80%
 

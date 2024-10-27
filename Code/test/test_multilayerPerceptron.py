@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from Code.NeuralNetwork.multilayerPerceptron import MLP
+from Code.NeuralNetwork.multilayer_perceptron import MLP
 
 class TestMLP(unittest.TestCase):
         
@@ -22,6 +22,7 @@ class TestMLP(unittest.TestCase):
                           [0.8, 0.4]])  # Weights for output layer
             ]
 
+        
         def test_initialization(self):
             # Test if the MLP is initialized correctly
             self.assertEqual(self.mlp.num_inputs, 3)
@@ -33,6 +34,7 @@ class TestMLP(unittest.TestCase):
             input_data = [0.5, -0.2, 0.1]
             output = self.mlp.forward_propagate(input_data)
             self.assertEqual(len(output), 2)  # Assuming output size is 2
+            self.assertAlmostEqual(output[0], 0.79549026, places=5)  # Testing output value
 
         def test_back_propagate(self):
             # Simulate a forward pass to store activations
@@ -50,6 +52,10 @@ class TestMLP(unittest.TestCase):
             self.assertEqual(self.mlp.derivatives[1].shape, self.mlp.weights[1].shape)
             self.assertEqual(self.mlp.derivatives[2].shape, self.mlp.weights[2].shape)
 
+            # Check if the derivatives are different from zero (initialized as zeros)
+            for d in self.mlp.derivatives:
+                self.assertFalse(np.array_equal(d, np.zeros(d.shape)))
+
         def test_train(self):
             # Sample input data (X) and target data (Y)
             inputs = np.array([
@@ -57,6 +63,7 @@ class TestMLP(unittest.TestCase):
                 [0.9, 0.1, 0.4],
                 [0.3, 0.8, -0.5]
             ])
+            
             targets = np.array([
                 [0.1, 0.9],
                 [0.8, 0.2],
@@ -72,9 +79,6 @@ class TestMLP(unittest.TestCase):
             # Check if the weights have been updated (i.e., not equal to initial weights)
             for i in range(len(self.mlp.weights)):
                 self.assertFalse(np.array_equal(self.mlp.weights[i], initial_weights[i]))
-
-            # Check if the training work on the training data
-            # self.assertTrue(np.allclose(self.mlp.forward_propagate(inputs[0]), targets[0], atol=0.1))
 
 if __name__ == '__main__':
         unittest.main()

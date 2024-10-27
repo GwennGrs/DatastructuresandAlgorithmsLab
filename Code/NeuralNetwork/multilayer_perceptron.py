@@ -26,7 +26,6 @@ class MLP():
             hidden_layers (list): A list of ints for the hidden layers
             num_outputs (int): Number of outputs
         """
-        # Set the random seed for reproducibility
 
         self.num_inputs = num_inputs
         self.hidden_layers = hidden_layers
@@ -36,7 +35,6 @@ class MLP():
         layers = [num_inputs] + hidden_layers + [num_outputs]
 
         # create random connection weights for the layers,
-        # segments the "layer" array into the necessary matrices.
         weights = []
         for i in range(len(layers) - 1):
             w = np.random.rand(layers[i], layers[i + 1])
@@ -67,15 +65,14 @@ class MLP():
             activations (ndarray): Output values
         """
 
-        # the input layer activation is just the input itself
         activations = inputs
 
-        # save the activations(here the inputs) for backpropagation
+        # save the activations for backpropagation
         self.activations[0] = activations
 
         # iterate through the network layers
         for i, w in enumerate(self.weights):
-            # calculate matrix multiplication between previous activation and weight matrix
+            # scalar product of the inputs and the weights
             net_inputs = np.dot(activations, w)
 
             # apply sigmoid activation function
@@ -105,16 +102,16 @@ class MLP():
             # apply sigmoid derivative function
             delta = error * sigmoid_derivatives(activations)
 
-            # reshape delta (-1 guess automatically the size)
+            # reshape delta
             delta_tmp = delta.reshape(delta.shape[0], -1).T
 
             # get activations for current layer
             current_activations = self.activations[i]
 
-            # reshape activations as to have them as a 2d column matrix
+            # reshape activations 
             current_activations = current_activations.reshape(current_activations.shape[0],-1)
 
-            # save derivative after applying matrix multiplication
+            # save derivative after the scalar product of the layer activations with the delta
             self.derivatives[i] = np.dot(current_activations, delta_tmp)
 
             # backpropagate the next error
@@ -129,7 +126,7 @@ class MLP():
             epochs (int): Num. epochs we want to train the network for
             learning_rate (float): Step to apply to gradient descent
         """
-        # now enter the training loop
+        # loop a given number of epochs
         for i in range(epochs):
             sum_errors = 0
 
@@ -137,16 +134,14 @@ class MLP():
             for j, input in enumerate(inputs):
                 target = targets[j]
 
-                # activate the network!
+                # start the forward propagation
                 output = self.forward_propagate(input)
-
 
                 error = target - output
 
                 self.back_propagate(error)
 
-                # now perform gradient descent on the derivatives
-                # (this will update the weights
+                # now perform gradient descent on the derivatives to update the weights
                 self.gradient_descent(learning_rate)
 
                 # keep track of the MSE for reporting later
@@ -161,13 +156,13 @@ class MLP():
     def print_progress(self, current_epoch, total_epochs):
         """Prints the progress of the training."""
         percent_complete = (current_epoch / total_epochs) * 100
-        bar_length = 50  # Length of the progress bar
+        bar_length = 50 
         block = int(round(bar_length * current_epoch / total_epochs))
         # Create the progress bar string
         progress_bar = f"[{'#' * block}{'-' * (bar_length - block)}] {percent_complete:.2f}%"
 
         # Print the progress bar in the same line
-        print(f"\r{progress_bar}", end="")  # `end=""` to stay on the same line
+        print(f"\r{progress_bar}", end="") 
 
     def gradient_descent(self, learning_rate=1):
         """Learns by descending the gradient
